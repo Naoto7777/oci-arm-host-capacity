@@ -2,7 +2,7 @@ name: Create OCI Instance
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -38,17 +38,6 @@ jobs:
         CACHE_AVAILABILITY_DOMAINS=${{ secrets.CACHE_AVAILABILITY_DOMAINS }}
         OCI_BOOT_VOLUME_SIZE_IN_GBS=${{ secrets.OCI_BOOT_VOLUME_SIZE_IN_GBS }}
         EOF
-        echo "=== .env file created ==="
-        
-    - name: Verify .env (without secrets)
-      run: |
-        echo "=== Checking .env exists ==="
-        ls -la .env
-        echo "=== .env file lines: ==="
-        wc -l .env
     
     - name: Run script
-      run: |
-        echo "=== Starting PHP script ==="
-        php index.php 2>&1
-        echo "=== Script finished ==="
+      run: php index.php
